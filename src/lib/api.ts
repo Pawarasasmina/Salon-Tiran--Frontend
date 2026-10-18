@@ -1,6 +1,6 @@
-const configuredBase = import.meta.env.VITE_API_URL?.trim().replace(/\/$/, '') ?? '';
-
-export const API_BASE_URL = configuredBase;
+// Keep API requests on the frontend origin. Vite proxies them locally and
+// Vercel proxies them in production, so authentication cookies stay first-party.
+export const API_BASE_URL = '';
 
 export function apiUrl(path: string) {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
