@@ -5,9 +5,10 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 const nav = [['Home','/'],['Our Story','/about'],['Services','/services'],['Our Work','/work'],['Contact','/contact']];
 export function Layout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false); const { pathname } = useLocation();
+  const lightHeader = pathname !== '/' && pathname !== '/book';
   useEffect(() => { setOpen(false); window.scrollTo(0,0); }, [pathname]);
   return <>
-    <header className="site-header"><Link className="wordmark" to="/" aria-label="Salon Tiran Weerasinghe home"><span>SALON</span><strong>TIRAN WEERASINGHE</strong></Link>
+    <header className={`site-header${lightHeader?' site-header-light':''}`}><Link className="wordmark" to="/" aria-label="Salon Tiran Weerasinghe home"><span>SALON</span><strong>TIRAN WEERASINGHE</strong></Link>
       <nav className={open ? 'nav open' : 'nav'} aria-label="Main navigation">{nav.map(([label,path]) => <NavLink key={path} to={path}>{label}</NavLink>)}<Link to="/account" className="account"><UserRound size={17}/> Account</Link><Link to="/book" className="button dark mobile-book">Book an appointment</Link></nav>
       <div className="header-actions"><Link to="/book" className="button dark desktop-book">Book an appointment</Link><button className="menu" onClick={()=>setOpen(!open)} aria-label="Toggle menu">{open?<X/>:<Menu/>}</button></div>
     </header>
