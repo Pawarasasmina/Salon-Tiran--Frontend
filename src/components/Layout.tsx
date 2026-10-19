@@ -6,10 +6,10 @@ import {useBusiness} from '../lib/business';
 const nav=[['Home','/'],['Our Story','/about'],['Services','/services'],['Our Work','/work'],['Contact','/contact']];
 export function Layout({children}:{children:React.ReactNode}){
  const [open,setOpen]=useState(false),{pathname}=useLocation(),{settings}=useBusiness();
- const lightHeader=pathname!=='/'&&pathname!=='/book',shortName=settings.salonName.replace(/^salon\s+/i,''),whatsapp=settings.whatsapp.replace(/\D/g,'');
+ const bookingHeader=pathname==='/book',lightHeader=pathname!=='/',shortName=settings.salonName.replace(/^salon\s+/i,''),whatsapp=settings.whatsapp.replace(/\D/g,'');
  useEffect(()=>{setOpen(false);window.scrollTo(0,0)},[pathname]);
  return <>
-  <header className={`site-header${lightHeader?' site-header-light':''}`}><Link className="wordmark" to="/" aria-label={`${settings.salonName} home`}><span>SALON</span><strong>{shortName}</strong></Link>
+  <header className={`site-header${lightHeader?' site-header-light':''}${bookingHeader?' site-header-booking':''}`}><Link className="wordmark" to="/" aria-label={`${settings.salonName} home`}><span>SALON</span><strong>{shortName}</strong></Link>
    <nav className={open?'nav open':'nav'} aria-label="Main navigation">{nav.map(([label,path])=><NavLink key={path} to={path}>{label}</NavLink>)}<Link to="/account" className="account"><UserRound size={17}/> Account</Link><Link to="/book" className="button dark mobile-book">Book an appointment</Link></nav>
    <div className="header-actions"><Link to="/book" className="button dark desktop-book">Book an appointment</Link><button className="menu" onClick={()=>setOpen(!open)} aria-label="Toggle menu">{open?<X/>:<Menu/>}</button></div>
   </header>
